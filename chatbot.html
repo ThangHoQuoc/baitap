@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelQ - Trip Planner</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Leaflet CSS for map (optional) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    /* Chat widget specific styles */
+    #chat-widget { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px; display: flex; flex-direction: column; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: #fff; }
+    #chat-header { background: #2563eb; color: #fff; padding: 8px; font-weight: 500; }
+    #chat-log { flex: 1; overflow-y: auto; padding: 8px; background: #f9fafb; font-size: 14px; }
+    #chat-form { display: flex; border-top: 1px solid #e5e7eb; }
+    #chat-input { flex:1; border:none; padding:8px; font-size:14px; outline:none; }
+    #chat-form button { background: #2563eb; color: #fff; border:none; padding: 0 12px; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-20">
+    <div class="container mx-auto flex items-center justify-between p-4">
+      <h1 class="text-2xl font-bold text-blue-600">TravelQ</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="index.html" class="hover:text-blue-500">Home</a></li>
+          <li><a href="suggest.html" class="hover:text-blue-500">Suggest</a></li>
+          <li><a href="planner.html" class="text-blue-600 font-semibold">Trip Planner</a></li>
+          <li><a href="discover.html" class="hover:text-blue-500">Discover</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Trip Planner Content -->
+  <main class="container mx-auto p-4 space-y-8">
+    <section id="trips-overview" class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Your Trips</h2>
+      <button id="create-trip" class="bg-green-500 text-white px-4 py-2 rounded-lg">Create New Trip</button>
+      <div id="trip-list" class="mt-6 space-y-4">
+        <!-- Trip summary cards will be rendered here -->
+        <div class="p-4 border rounded-lg">
+          <h3 class="font-medium text-lg">Sample Trip: Weekend Getaway</h3>
+          <p class="text-sm text-gray-600">Dates: 2025-07-10 - 2025-07-12</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional map for itinerary preview -->
+    <section id="itinerary-map" class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-2xl font-semibold mb-4">Itinerary Map</h2>
+      <div id="planner-map" class="w-full h-64 rounded-lg"></div>
+    </section>
+  </main>
+
+  <!-- Chat Widget -->
+  <div id="chat-widget">
+    <div id="chat-header">Travel Buddy</div>
+    <div id="chat-log"></div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="Ask me anything…" autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <!-- Leaflet JS for map (optional) -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Chatbot JS -->
+<script src="chatbox.js"></script>
+</body>
+</html>

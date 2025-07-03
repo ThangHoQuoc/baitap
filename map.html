@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Location Sharing Demo</title>
+  <!-- Tailwind CSS for basic styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 400px; }
+  </style>
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-2xl font-semibold mb-4">Real-Time Location Sharing Demo</h1>
+  <button id="locate-btn" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Get My Location</button>
+  <div id="map" class="rounded-lg shadow-lg"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize map
+    const map = L.map('map').setView([21.0278, 105.8342], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Simulated other user locations
+    const users = {
+      alice: { lat: 21.0278, lng: 105.8342, marker: null, color: 'blue' },
+      bob:   { lat: 21.0328, lng: 105.8392, marker: null, color: 'green' }
+    };
+    Object.keys(users).forEach((userId) => {
+      const u = users[userId];
+      u.marker = L.circleMarker([u.lat, u.lng], {
+        radius: 8,
+        fillColor: u.color,
+        color: '#fff',
+        weight: 2,
+        fillOpacity: 0.8
+      }).addTo(map).bindPopup(userId);
+    });
+    setInterval(() => {
+      Object.keys(users).forEach((userId) => {
+        const u = users[userId];
+        u.lat += (Math.random() - 0.5) * 0.001;
+        u.lng += (Math.random() - 0.5) * 0.001;
+        u.marker.setLatLng([u.lat, u.lng]);
+      });
+    }, 2000);
+
+    // Get and mark current user location
+    const locateBtn = document.getElementById('locate-btn');
+    let myMarker;
+    locateBtn.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by your browser');
+        return;
+      }
+      locateBtn.disabled = true;
+      locateBtn.textContent = 'Locating...';
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        if (myMarker) {
+          myMarker.setLatLng([latitude, longitude]);
+        } else {
+          myMarker = L.marker([latitude, longitude], {title: 'You'}).addTo(map).bindPopup('You are here').openPopup();
+        }
+        map.setView([latitude, longitude], 15);
+        locateBtn.textContent = 'Get My Location';
+        locateBtn.disabled = false;
+      }, error => {
+        console.error(error);
+        alert('Unable to retrieve your location');
+        locateBtn.textContent = 'Get My Location';
+        locateBtn.disabled = false;
+      });
+    });
+  </script>
+
+
+
+<script src="/frontend/public/src/js/chatbot.js"></script>
+</body>
+</html>
