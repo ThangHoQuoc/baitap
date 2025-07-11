@@ -1,23 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BAI!</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>My Card</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="main">
-    <h1>Welcome Tiktok
-        <a href="https://www.tiktok.com/">Click Tiktok</a>
-    </h1>
-    <p class="text">
-        train1
-    </p>
-    <ul>
+<body>
 
-        <li>
-        thang
-        </li>
-    </ul>
+  <div class="card-container">
+    <div class="card tilt-card" id="tiltCard">
+      <div class="tilt-shine" id="shine"></div>
+      <img src="unnamed.png" alt="Avatar" class="card-img">
+      <div class="card-info">
+        <h2>Hồ Quốc Thắng</h2>
+        <p>Web Player</p>
+        <div class="social-icons">
+          <a href="https://www.youtube.com/@laobanh2353" class="icon"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.instagram.com/thang_cherry/" class="icon"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/quoc.thang.2906793" class="icon"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById('tiltCard');
+    const shine = document.getElementById('shine');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const deltaX = x - centerX;
+      const deltaY = y - centerY;
+
+      const percentX = deltaX / centerX;
+      const percentY = deltaY / centerY;
+
+      const rotateX = percentY * -10;
+      const rotateY = percentX * 10;
+
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.4), transparent 80%)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      shine.style.background = 'radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 80%)';
+    });
+  </script>
+
 </body>
 </html>
