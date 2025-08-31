@@ -1,60 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>My Card</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>HQT</title>
 </head>
 <body>
+  <h2 style="color: purple;">Chọn địa chỉ</h2>
 
-  <div class="card-container">
-    <div class="card tilt-card" id="tiltCard">
-      <div class="tilt-shine" id="shine"></div>
-      <img src="unnamed.png" alt="Avatar" class="card-img">
-      <div class="card-info">
-        <h2>Hồ Quốc Thắng</h2>
-        <p>Web Player</p>
-        <div class="social-icons">
-          <a href="https://www.youtube.com/@laobanh2353" class="icon"><i class="fab fa-youtube"></i></a>
-          <a href="https://www.instagram.com/thang_cherry/" class="icon"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.facebook.com/quoc.thang.2906793" class="icon"><i class="fab fa-facebook-f"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
+<select id="city" onchange="chonTinh()" style="margin:5px; padding:3px; background-color: violet;">
+  <option value="">-- Tỉnh/Thành phố --</option>
+</select>
 
-  <script>
-    const card = document.getElementById('tiltCard');
-    const shine = document.getElementById('shine');
+<select id="district" onchange="chonHuyen()" style="margin:5px; padding:3px; background-color: lightyellow;">
+  <option value="">-- Quận/Huyện --</option>
+</select>
 
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+<select id="ward" onchange="hienThiDiaChi()" style="margin:5px; padding:3px; background-color: lightcyan;">
+  <option value="">-- Phường/Xã --</option>
+</select>
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
+<p style="color: green; font-size: 16px;">
+  <b>Địa chỉ đã chọn:</b> 
+  <span id="output" style="color:red;"></span>
+</p>
 
-      const deltaX = x - centerX;
-      const deltaY = y - centerY;
 
-      const percentX = deltaX / centerX;
-      const percentY = deltaY / centerY;
 
-      const rotateX = percentY * -10;
-      const rotateY = percentX * 10;
-
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.4), transparent 80%)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      shine.style.background = 'radial-gradient(circle at center, rgba(255,255,255,0.3), transparent 80%)';
-    });
-  </script>
-
+  <script src="main.js"></script>
 </body>
 </html>
